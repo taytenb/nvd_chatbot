@@ -1,0 +1,85 @@
+AWS Account Chatbot - Example Output
+
+Here are some examples of running the chatbot against a real AWS account. All of these are actual outputs from testing.
+
+
+Example 1: Checking for public S3 buckets
+
+Query: How many S3 buckets are exposed to the public?
+
+The chatbot invoked the check_s3_public_access tool and found:
+
+Total buckets: 1
+Public: 0
+Private: 1
+
+Response: There is a total of 1 S3 bucket. None of the buckets are publicly accessible, all are private.
+
+
+Example 2: Looking at what's in an S3 bucket
+
+Query: What data does the S3 bucket aws-logs-779846804437-us-east-1 hold?
+
+The chatbot listed the bucket contents:
+
+Bucket: aws-logs-779846804437-us-east-1
+Total files: 3056
+Total size: 18.26 MB
+
+Files:
+  elasticmapreduce/j-13M8HEKXKDK1G/containers/application_1744951502296_0001/container_1744951502296_0001_01_000001/prelaunch.out.gz - 78.00 B (2025-04-18 04:57)
+  elasticmapreduce/j-13M8HEKXKDK1G/containers/application_1744951502296_0001/container_1744951502296_0001_01_000001/stderr.gz - 24.55 KB (2025-04-18 05:26)
+  elasticmapreduce/j-13M8HEKXKDK1G/containers/application_1744951502296_0001/container_1744951502296_0001_01_000002/prelaunch.out.gz - 78.00 B (2025-04-18 04:57)
+  elasticmapreduce/j-13M8HEKXKDK1G/containers/application_1744951502296_0001/container_1744951502296_0001_01_000002/stderr.gz - 274.75 KB (2025-04-18 05:26)
+  elasticmapreduce/j-13M8HEKXKDK1G/containers/application_1744951502296_0001/container_1744951502296_0001_01_000002/stdout.gz - 74.89 KB (2025-04-18 05:26)
+  elasticmapreduce/j-13M8HEKXKDK1G/containers/application_1744951502296_0001/container_1744951502296_0001_01_000004/prelaunch.out.gz - 78.00 B (2025-04-18 04:57)
+  elasticmapreduce/j-13M8HEKXKDK1G/containers/application_1744951502296_0001/container_1744951502296_0001_01_000004/stderr.gz - 241.44 KB (2025-04-18 05:26)
+  elasticmapreduce/j-13M8HEKXKDK1G/containers/application_1744951502296_0001/container_1744951502296_0001_01_000004/stdout.gz - 66.57 KB (2025-04-18 05:26)
+  elasticmapreduce/j-13M8HEKXKDK1G/node/i-00b151911408b78e9/applications/hadoop-hdfs/hadoop-hdfs-datanode-ip-10-0-31-103.log.2025-04-18-04.gz - 9.02 KB (2025-04-18 05:22)
+  elasticmapreduce/j-13M8HEKXKDK1G/node/i-00b151911408b78e9/applications/hadoop-hdfs/hadoop-hdfs-datanode-ip-10-0-31-103.log.gz - 670.00 B (2025-04-18 05:26)
+  ... and 3046 more files
+
+Response: The S3 bucket holds 3056 files totaling 18.26 MB. It contains ElasticMapReduce logs including container logs, Hadoop HDFS logs, and other application logs.
+
+
+Example 3: Checking IAM user permissions
+
+Query: What permissions does the user taytenb have?
+
+The chatbot retrieved the user info:
+
+User: taytenb
+ARN: arn:aws:iam::779846804437:user/taytenb
+Created: 2025-09-30
+
+Managed Policies:
+  - ReadOnlyAccess
+  - IAMUserChangePassword
+
+Response: User taytenb has ReadOnlyAccess (which provides read-only access to all AWS services) and IAMUserChangePassword (which allows changing their own password).
+
+
+Example 4: Asking about public buckets in a different way
+
+Query: Are any of my S3 buckets publicly accessible?
+
+Response: No, none of your S3 buckets are publicly accessible. You have 1 S3 bucket and it is private.
+
+
+Example 5: What happens when you ask about a bucket that doesn't exist
+
+Query: What's in the bucket nonexistent-bucket-12345?
+
+Response: The bucket 'nonexistent-bucket-12345' does not exist in your AWS account.
+
+
+Example 6: What happens when you ask about a user that doesn't exist
+
+Query: What permissions does user fake-user have?
+
+Response: The IAM user 'fake-user' does not exist in your AWS account.
+
+
+Notes
+
+All these examples are from actual test runs. The chatbot typically responds in 3-5 seconds. It only does read-only operations so it can't accidentally change anything in your AWS account. You need to have AWS credentials configured and an OpenAI API key set up for it to work.
